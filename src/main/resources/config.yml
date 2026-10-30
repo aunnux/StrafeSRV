@@ -1,0 +1,73 @@
+# ───────────────────────────── StrafeSRV ─────────────────────────────
+# Quote every ID ("2102443061534523392") so YAML never mangles them.
+
+strafe:
+  # Bot token: Strafe → Settings → Developers → your application → Bot.
+  token: ""
+  # The Strafe instance to connect to.
+  instance-url: "https://app.strafe.chat"
+  # Leave blank to derive them from instance-url (<instance>/api and wss://<host>/gateway/events).
+  api-url: ""
+  gateway-url: ""
+
+channels:
+  # Room ID of the text room that mirrors Minecraft chat. Must NOT be end-to-end encrypted.
+  # (Strafe: enable Developer/copy-ID in the client, or read it from the room URL / API.)
+  chat: ""
+  # Optional: room that receives the server console and runs commands (see console.* below).
+  console: ""
+  # Optional: room where players post "!link <code>". Blank = use the chat room.
+  link: ""
+
+chat:
+  minecraft-to-strafe: true
+  strafe-to-minecraft: true
+  # Longest Strafe message shown in game before it is cut with "…".
+  max-minecraft-message-length: 400
+  # Backslash-escape * _ ~ ` | > \ in text coming from Minecraft so players can't format their messages.
+  # Mention syntax (<@id>, <#id>, @everyone …) is ALWAYS neutralised regardless of this setting.
+  escape-markdown: false
+
+limits:
+  # Messages longer than this are split into several. Lower it if Strafe rejects long messages.
+  max-message-length: 2000
+
+messages:
+  # Minecraft → Strafe. Placeholders: {username} {displayname} {uuid} {message} {world} {advancement}
+  minecraft-to-strafe:
+    chat: "**{username}** » {message}"
+    join: "➕ **{username}** joined the server"
+    quit: "➖ **{username}** left the server"
+    death: "💀 {message}"
+    advancement: "🏆 **{username}** has made the advancement **{advancement}**"
+    server-start: "✅ **Server started**"
+    server-stop: "🛑 **Server stopped**"
+    # Set any of these to "" to disable that message.
+
+  # Strafe → Minecraft ('&' colour codes). Placeholders: {name} {message} {role} {role_prefix}
+  strafe-to-minecraft:
+    chat: "&9[Strafe] &7{role_prefix}&f{name} &8» &f{message}"
+    # {role_prefix} is this text with {role} filled in, or nothing when the member has no role.
+    role-format: "[{role}] "
+
+console:
+  # How often buffered console lines are posted to the console room.
+  flush-interval-seconds: 3
+  # Only these Strafe user IDs may run commands from the console room. EMPTY = nobody (read-only mirror).
+  allowed-user-ids: []
+  # Optional prefix required on command messages (e.g. "!"). Blank = every message from an allowed user is a command.
+  command-prefix: ""
+  # First word of commands that are refused even for allowed users (e.g. [stop, op, deop]).
+  blocked-commands: []
+
+linking:
+  enabled: true
+  command-prefix: "!"
+  # Optional: a Strafe role ID to give linked players (the bot needs Manage Roles and its role must sit ABOVE this role).
+  linked-role-id: ""
+  code-expiry-minutes: 10
+
+presence:
+  # Shows "Playing <text>" under the bot's name. Placeholders: {online} {max}
+  enabled: true
+  text: "Minecraft | {online}/{max} online"

@@ -1,0 +1,20 @@
+name: StrafeSRV
+version: '${project.version}'
+main: dev.strafesrv.StrafeSRV
+api-version: '26.2'
+description: Bridges Minecraft chat and console with Strafe.chat (a DiscordSRV-style plugin)
+commands:
+  strafe:
+    description: StrafeSRV commands
+    usage: /<command> <reload|status|link|unlink>
+    aliases: [strafesrv]
+permissions:
+  strafesrv.admin:
+    description: Reload and inspect StrafeSRV
+    default: op
+  strafesrv.link:
+    description: Link a Minecraft account to a Strafe account
+    default: true
+  strafesrv.silent:
+    description: Join/quit/death/advancement messages are not relayed to Strafe
+    default: false
